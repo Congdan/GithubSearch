@@ -1,4 +1,4 @@
-package com.example.android.githubsearch;
+package com.example.android.githubsearch.presenter;
 
 import android.graphics.Bitmap;
 import android.widget.Toast;

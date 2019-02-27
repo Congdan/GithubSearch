@@ -1,7 +1,5 @@
 package com.example.android.githubsearch;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
@@ -12,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -22,9 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.githubsearch.model.Repo;
+import com.example.android.githubsearch.presenter.MainActivityPresenter;
+import com.example.android.githubsearch.recyclerView.RecyclerViewAdapter;
+import com.example.android.githubsearch.recyclerView.RecyclerViewClickListener;
 
 import java.util.List;
 
