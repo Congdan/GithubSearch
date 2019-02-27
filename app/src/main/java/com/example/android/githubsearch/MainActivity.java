@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     public void onClickSearch(View view) {
         hideKeyboard();
         String userInput = mEditText.getText().toString();
+        if (userInput.equals("")) return;
         mPresenter.getUser(userInput);
     }
 
