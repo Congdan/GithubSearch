@@ -1,5 +1,6 @@
 package com.example.android.githubsearch;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     }
 
     public void onClickSearch(View view) {
+        hideKeyboard();
         String userInput = mEditText.getText().toString();
         mPresenter.getUser(userInput);
     }
@@ -103,6 +106,17 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         ((TextView) repoDetailView.findViewById(R.id.fork_display)).setText(forks);
 
         dialog.show();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = this.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
