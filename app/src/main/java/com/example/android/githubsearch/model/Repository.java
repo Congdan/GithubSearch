@@ -1,6 +1,6 @@
 package com.example.android.githubsearch.model;
 
-public class Repo {
+public class Repository {
 
     private String name;
     private String description;

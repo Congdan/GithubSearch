@@ -9,18 +9,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.githubsearch.R;
-import com.example.android.githubsearch.model.Repo;
+import com.example.android.githubsearch.model.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<Repo> mRepoList;
+    private List<Repository> mRepositoryList;
     private static  RecyclerViewClickListener mListener;
 
     public RecyclerViewAdapter(RecyclerViewClickListener listener) {
-        mRepoList = new ArrayList<>();
+        mRepositoryList = new ArrayList<>();
         mListener = listener;
     }
 
@@ -48,15 +48,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Repo repo = mRepoList.get(position);
+        Repository repository = mRepositoryList.get(position);
 
-        ((TextView) holder.repoName).setText(repo.getName());
-        ((TextView) holder.repoDescription).setText(repo.getDescription());
+        ((TextView) holder.repoName).setText(repository.getName());
+        ((TextView) holder.repoDescription).setText(repository.getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return mRepoList.size();
+        return mRepositoryList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,8 +72,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public void updateRepoList(List<Repo> repoList) {
-        mRepoList = new ArrayList<>(repoList);
+    public void updateRepoList(List<Repository> repositoryList) {
+        mRepositoryList = new ArrayList<>(repositoryList);
         this.notifyDataSetChanged();
     }
 }

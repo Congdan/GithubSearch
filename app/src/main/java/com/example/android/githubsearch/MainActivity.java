@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.android.githubsearch.model.Repo;
+import com.example.android.githubsearch.model.Repository;
 import com.example.android.githubsearch.presenter.MainActivityPresenter;
 import com.example.android.githubsearch.recyclerView.RecyclerViewAdapter;
 import com.example.android.githubsearch.recyclerView.RecyclerViewClickListener;
@@ -63,8 +63,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         mPresenter.getUser(userInput);
     }
 
-    private void slideUp(View view) {
+    //Add animation to a given view
+    private void animateView(View view) {
         view.setVisibility(View.VISIBLE);
+
         TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, view.getHeight() / 5, 0);
         translateAnimation.setDuration(500);
         translateAnimation.setFillAfter(true);
@@ -80,17 +82,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         view.startAnimation(animation);
     }
 
+    //Show the detail info of a repo in a dialog, when a repo is clicked
     private void showDialog(String lastUpdated, String stars, String forks) {
-//        Dialog dialog = new Dialog(this);
-//
-//        Window window = dialog.getWindow();
-//        window.setGravity(Gravity.BOTTOM);
-//
-////        window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        dialog.setTitle(null);
-//        dialog.setContentView(R.layout.repo_detail);
-//        dialog.setCancelable(true);
-
         Context context = MainActivity.this;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -105,45 +98,30 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
 
         dialog.setView(repoDetailView);
 
-        TextView updateDisplay = (TextView) repoDetailView.findViewById(R.id.update_display);
-        updateDisplay.setText(lastUpdated);
-        TextView starDisplay = (TextView) repoDetailView.findViewById(R.id.star_display);
-        starDisplay.setText(stars);
-        TextView forkDisplay = (TextView) repoDetailView.findViewById(R.id.fork_display);
-        forkDisplay.setText(forks);
+        ((TextView) repoDetailView.findViewById(R.id.update_display)).setText(lastUpdated);
+        ((TextView) repoDetailView.findViewById(R.id.star_display)).setText(stars);
+        ((TextView) repoDetailView.findViewById(R.id.fork_display)).setText(forks);
 
         dialog.show();
-    }
-
-    private void updateDialog(String lastUpdated, String stars, String forks) {
-//        TextView updateDisplay = (TextView) findViewById(R.id.update_display);
-//        updateDisplay.setText(lastUpdated);
-//        TextView starDisplay = (TextView) findViewById(R.id.star_display);
-//        starDisplay.setText(stars);
-//        TextView forkDisplay = (TextView) findViewById(R.id.fork_display);
-//        forkDisplay.setText(forks);
-
     }
 
     @Override
     public void updateUserInfo(String userName, Bitmap userAvatar) {
         mTextView.setText(userName);
         mImageView.setImageBitmap(userAvatar);
-        slideUp(mAvatarContainer);
+        animateView(mAvatarContainer);
     }
 
     @Override
-    public void updateRepoInfo(List<Repo> repoList) {
-        mAdapter.updateRepoList(repoList);
-        slideUp(mRecyclerView);
+    public void updateRepoInfo(List<Repository> repositoryList) {
+        mAdapter.updateRepoList(repositoryList);
+        animateView(mRecyclerView);
     }
 
     @Override
     public void showRepoDetail(String lastUpdated, String stars, String forks) {
         showDialog(lastUpdated, stars, forks);
-//        updateDialog(lastUpdated, stars, forks);
     }
-
 
     @Override
     public void recyclerViewClicked(int position) {

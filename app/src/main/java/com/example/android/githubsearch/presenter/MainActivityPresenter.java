@@ -1,13 +1,12 @@
 package com.example.android.githubsearch.presenter;
 
 import android.graphics.Bitmap;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.BitmapRequestListener;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.example.android.githubsearch.model.Repo;
+import com.example.android.githubsearch.model.Repository;
 import com.example.android.githubsearch.model.User;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public class MainActivityPresenter {
         mView = view;
     }
 
+    //Get the user information from the server using the input user id
     public void getUser(final String userInput) {
         AndroidNetworking.get(API_PREFIX + userInput)
                 .build()
@@ -40,6 +40,7 @@ public class MainActivityPresenter {
                 });
     }
 
+    //Get the user avatar using the url returned from the server
     private void getUserAvatar(final String userInput) {
         AndroidNetworking.get(mUser.getAvatar_url())
                 .build()
@@ -58,14 +59,15 @@ public class MainActivityPresenter {
                 });
     }
 
+    //Get the list of all repos of the user from the server
     private void getUserRepo(String userInput) {
         AndroidNetworking.get(API_PREFIX + userInput + "/repos")
                 .build()
-                .getAsObjectList(Repo.class, new ParsedRequestListener<List<Repo>>() {
+                .getAsObjectList(Repository.class, new ParsedRequestListener<List<Repository>>() {
                     @Override
-                    public void onResponse(List<Repo> repoList) {
-                        mUser.setRepoList(repoList);
-                        mView.updateRepoInfo(mUser.getRepoList());
+                    public void onResponse(List<Repository> repositoryList) {
+                        mUser.setRepositoryList(repositoryList);
+                        mView.updateRepoInfo(mUser.getRepositoryList());
                     }
 
                     @Override
@@ -75,14 +77,18 @@ public class MainActivityPresenter {
                 });
     }
 
+    //Set the repo details to the view when a repo is clicked
     public void repoClicked(int position) {
-        Repo repo = mUser.getRepoList().get(position);
-        mView.showRepoDetail(repo.getUpdated_at(), String.valueOf(repo.getStargazers_count()), String.valueOf(repo.getForks()));
+        Repository repository = mUser.getRepositoryList().get(position);
+        mView.showRepoDetail(repository.getUpdated_at(), String.valueOf(repository.getStargazers_count()), String.valueOf(repository.getForks()));
     }
 
     public interface View{
+        //Send the user name and user avatar to the view
         void updateUserInfo(String userName, Bitmap userAvatar);
-        void updateRepoInfo(List<Repo> repoList);
+        //Send a list of repos of the user to the view
+        void updateRepoInfo(List<Repository> repositoryList);
+        //Send the detail of the clicked repo to the view
         void showRepoDetail(String lastUpdated, String stars, String forks);
     }
 }

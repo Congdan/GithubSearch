@@ -9,7 +9,7 @@ public class User {
     private String name;
     private String avatar_url;
     private Bitmap avatar;
-    private List<Repo> repoList;
+    private List<Repository> repositoryList;
 
     public String getName() {
         return name;
@@ -35,11 +35,11 @@ public class User {
         this.avatar = avatar;
     }
 
-    public List<Repo> getRepoList() {
-        return repoList;
+    public List<Repository> getRepositoryList() {
+        return repositoryList;
     }
 
-    public void setRepoList(List<Repo> repoList) {
-        this.repoList = repoList;
+    public void setRepositoryList(List<Repository> repositoryList) {
+        this.repositoryList = repositoryList;
     }
 }
